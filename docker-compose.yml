@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  dev-duo-db:
+    image: postgres
+    restart: always
+    container_name: dev-duo-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+      PDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+volumes:
+  postgres:
