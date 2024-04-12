@@ -20,7 +20,7 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
   description: z.string().min(2).max(100),
   githubRepo: z.string().min(2).max(50),
-  language: z.string().min(1).max(50),
+  tags: z.string().min(1).max(50),
 });
 
 export function CreateRoomForm() {
@@ -32,7 +32,7 @@ export function CreateRoomForm() {
       name: "",
       description: "",
       githubRepo: "",
-      language: "",
+      tags: "",
     },
   });
 
@@ -94,15 +94,15 @@ export function CreateRoomForm() {
         />
         <FormField
           control={form.control}
-          name="language"
+          name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Primary Programming Language</FormLabel>
+              <FormLabel>Tags</FormLabel>
               <FormControl>
-                <Input placeholder="Languages" {...field} />
+                <Input placeholder="Typescript,nextjs,shadcn" {...field} />
               </FormControl>
               <FormDescription>
-                List the primary programing language you are working on
+              List your programming languages, frameworks, libraries so people can find you content
               </FormDescription>
               <FormMessage />
             </FormItem>
