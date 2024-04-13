@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteIcon, LogInIcon, LogOutIcon } from "lucide-react";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 // import {
@@ -102,7 +101,7 @@ export function Header() {
           href="/"
           className="flex gap-2 items-center text-xl hover:underline"
         >
-         DD DevDuo
+          DD DevDuo
         </Link>
 
         {/* <nav className="flex gap-8">
