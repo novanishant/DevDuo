@@ -12,10 +12,9 @@ import {
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Room } from "@/db/schema";
+import {generateTokenAction} from "./actions";
 
 const apiKey = process.env.NEXT_PUBLIC_GET_STREAM_API_KEY;
-const token =
-  "add your token";
 
 export function DevDuoVideo({ room }: { room: Room }) {
   const session = useSession();
@@ -33,7 +32,7 @@ export function DevDuoVideo({ room }: { room: Room }) {
     const client = new StreamVideoClient({
       apiKey,
       user: { id: userId },
-      token,
+      tokenProvider:() =>  generateTokenAction(),
     });
     setClient(client);
     const call = client.call("default", room.id);
