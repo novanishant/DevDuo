@@ -1,7 +1,8 @@
 "use client";
+
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,37 +14,39 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createRoomAction } from "./actions";
-import { useRouter } from "next/navigation";
+import { editRoomAction } from "./actions";
+import { useParams } from "next/navigation";
+import { Room } from "@/db/schema";
 import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
-  name: z.string().min(2).max(50),
-  description: z.string().min(2).max(100),
-  githubRepo: z.string().min(2).max(50),
+  name: z.string().min(1).max(50),
+  description: z.string().min(1).max(250),
+  githubRepo: z.string().min(1).max(50),
   tags: z.string().min(1).max(50),
 });
 
-export function CreateRoomForm() {
-  const router = useRouter();
-
+export function EditRoomForm({ room }: { room: Room }) {
+  const params = useParams();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      githubRepo: "",
-      tags: "",
+      name: room.name,
+      description: room.description ?? "",
+      githubRepo: room.githubRepo ?? "",
+      tags: room.tags,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const room = await createRoomAction(values);
-    toast({
-      title: "Room Created",
-      description: "Your room was successfully created",
+    await editRoomAction({
+      id: params.roomId as string,
+      ...values,
     });
-    router.push(`/rooms/${room.id}`);
+    toast({
+      title: "Room Updated",
+      description: "Your room was successfully updated",
+    });
   }
 
   return (
@@ -54,17 +57,16 @@ export function CreateRoomForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Room Name</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter room name" {...field} />
+                <Input {...field} placeholder="Dev Finder Is Awesome" />
               </FormControl>
-              <FormDescription>
-                Please enter the name of the room.
-              </FormDescription>
+              <FormDescription>This is your public room name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="description"
@@ -72,15 +74,19 @@ export function CreateRoomForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Enter room description" {...field} />
+                <Input
+                  {...field}
+                  placeholder="Im working on a side project, come join me"
+                />
               </FormControl>
               <FormDescription>
-                Write a brief description of the room&apos;s purpose or topic.
+                Please describe what you are be coding on
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="githubRepo"
@@ -88,7 +94,10 @@ export function CreateRoomForm() {
             <FormItem>
               <FormLabel>Github Repo</FormLabel>
               <FormControl>
-                <Input placeholder="Enter github repo link" {...field} />
+                <Input
+                  {...field}
+                  placeholder="https://github.com/webdevcody/dev-finder"
+                />
               </FormControl>
               <FormDescription>
                 Please put a link to the project you are working on
@@ -97,6 +106,7 @@ export function CreateRoomForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="tags"
@@ -104,15 +114,17 @@ export function CreateRoomForm() {
             <FormItem>
               <FormLabel>Tags</FormLabel>
               <FormControl>
-                <Input placeholder="Typescript,nextjs,shadcn" {...field} />
+                <Input {...field} placeholder="typescript, nextjs, tailwind" />
               </FormControl>
               <FormDescription>
-              List your programming languages, frameworks, libraries so people can find you content
+                List your programming languages, frameworks, libraries so people
+                can find you content
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>

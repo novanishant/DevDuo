@@ -104,7 +104,7 @@ export function Header() {
           DD DevDuo
         </Link>
 
-        {/* <nav className="flex gap-8">
+        <nav className="flex gap-8">
           {isLoggedIn && (
             <>
               <Link className="hover:underline" href="/browse">
@@ -116,7 +116,7 @@ export function Header() {
               </Link>
             </>
           )}
-        </nav> */}
+        </nav>
 
         <div className="flex items-center gap-4">
           {isLoggedIn && <AccountDropdown />}
