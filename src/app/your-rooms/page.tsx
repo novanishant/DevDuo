@@ -16,7 +16,7 @@ export default async function YourRoomsPage() {
           <Link href="/create-room">Create Room</Link>
         </Button>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid gap-4 md:grid-cols-3">
         {rooms.map((room) => {
           return <UserRoomCard key={room.id} room={room} />;
         })}

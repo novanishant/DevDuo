@@ -22,7 +22,7 @@ export default async function Home({searchParams}:{searchParams:{search:string;}
       <div className = "mb-12">
       <SearchBar/>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid gap-4 md:grid-cols-3">
         {rooms.map((room) => {
           return <RoomCard key={room.id} room={room} />;
         })}
