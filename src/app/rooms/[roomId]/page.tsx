@@ -3,7 +3,6 @@ import Link from "next/link";
 import { GithubIcon } from "lucide-react";
 import {TagsList } from "@/components/tags-list";
 import { DevDuoVideo } from "./video-player";
-import { room } from '@/db/schema';
 import {splitTags} from "@/lib/utils"
 export default async function RoomPage(props: { params: { roomId: string } }) {
   const roomId = props.params.roomId;

@@ -54,7 +54,7 @@ return (
         <StreamCall call={call}>
           <SpeakerLayout />
           <CallControls onLeave={() => {
-            router.push("/");
+            router.push("/browse");
           }} />
           <CallParticipantsList onClose={() => undefined} />
         </StreamCall>
