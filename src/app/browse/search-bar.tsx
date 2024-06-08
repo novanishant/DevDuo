@@ -65,7 +65,7 @@ export function SearchBar(){
             variant="link"
             onClick={() => {
               form.setValue("search", "");
-              router.push("/");
+              router.push("/browse");
             }}
           >
             Clear
